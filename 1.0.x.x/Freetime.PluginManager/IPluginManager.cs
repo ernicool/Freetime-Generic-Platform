@@ -12,6 +12,7 @@ namespace Freetime.PluginManagement
         WebView GetWebView(string viewName);
         WebPartialView GetPartialView(string partialViewName);
         WebMasterPage GetWebMasterPage(string masterPageName);
+        WebController GetWebControllerByType(string controllerType);
 
         BusinessLogic GetBusinessLogic(string logicName);
         BusinessLogic GetBusinessLogic(Type logicType);

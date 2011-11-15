@@ -1,8 +1,8 @@
 ﻿using System.Configuration;
 
-namespace Freetime.Base.Business.Configuration
+namespace Freetime.Base.Component.Configuration
 {
-    public class DataSessionBuilderConfiguration : ConfigurationSection
+    public class BusinessLogicBuilderConfiguration : ConfigurationSection
     {
         [ConfigurationProperty("CustomProvider", IsRequired = false)]
         public bool CustomProvider
@@ -19,7 +19,7 @@ namespace Freetime.Base.Business.Configuration
             }
         }
 
-        [ConfigurationProperty("FactoryType", IsRequired =  false)]
+        [ConfigurationProperty("FactoryType", IsRequired = false)]
         public string FactoryType
         {
             get
@@ -36,13 +36,13 @@ namespace Freetime.Base.Business.Configuration
 
         [
         ConfigurationProperty("Attributes", IsDefaultCollection = false),
-        ConfigurationCollection(typeof(DataSessionBuilderConfigurationAttributeCollection), AddItemName = "addAttribute", ClearItemsName = "clearAttributes", RemoveItemName = "removeAttribute")
+        ConfigurationCollection(typeof(BusinessLogicBuilderConfigurationAttributeCollection), AddItemName = "addAttribute", ClearItemsName = "clearAttributes", RemoveItemName = "removeAttribute")
         ]
-        public DataSessionBuilderConfigurationAttributeCollection Attributes
+        public BusinessLogicBuilderConfigurationAttributeCollection Attributes
         {
             get
             {
-                return this["Attributes"] as DataSessionBuilderConfigurationAttributeCollection;
+                return this["Attributes"] as BusinessLogicBuilderConfigurationAttributeCollection;
             }
         }
     }

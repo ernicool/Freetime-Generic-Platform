@@ -19,12 +19,12 @@ namespace Freetime.Base.Business
 
             var blogic = PluginManagement.PluginManager.Current.GetBusinessLogic(logic.GetType().FullName);
 
-            if (blogic == null)
+            if (Equals(blogic, null))
                 return defaultContract;
 
             var sessionType = Type.GetType(string.Format("{0}, {1}", blogic.DataSessionType, blogic.DataSessionAssembly));
 
-            if(sessionType == null)
+            if(Equals(sessionType, null))
                 throw new Exception(string.Format("Unknown type: {0}, {1}", blogic.DataSessionType, blogic.DataSessionAssembly));
 
             var typeInstance = Framework.Activator.CreateInstance(sessionType);

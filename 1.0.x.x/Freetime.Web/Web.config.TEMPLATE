@@ -6,10 +6,18 @@
 		<section name="pluginManagementConfig" type="Freetime.PluginManagement.Configuration.PluginManagerConfiguration" allowDefinition="Everywhere" requirePermission="false"/>
 		<section name="AnitoProviderConfiguration" type="Anito.Data.Configuration.ProviderConfiguration, Anito.Data" allowDefinition="Everywhere" requirePermission="false"/>
 		<section name="dataSessionBuilderConfig" type="Freetime.Base.Business.Configuration.DataSessionBuilderConfiguration, Freetime.Base.Business" allowDefinition="Everywhere" requirePermission="false"/>
+    <section name="businessLogicBuilderConfig" type="Freetime.Base.Component.Configuration.BusinessLogicBuilderConfiguration, Freetime.Base.Component" allowDefinition="Everywhere" requirePermission="false"/>
 	</configSections>
 	<!--Freetime Config Sections-->
 	<!--Freetime Main Configuration-->
-	<Freetime.Configuration DefaultTheme="FreetimeBlue" DefaultMasterPage="Main" GlobalEventConfigurationSection="globalEventConfig" PluginManagementConfigurationSection="pluginManagementConfig" LogFilesLocation="${log.files.location}" DataSessionBuilderConfigurationSection="dataSessionBuilderConfig">
+	<Freetime.Configuration 
+    DefaultTheme="FreetimeBlue" 
+    DefaultMasterPage="Main" 
+    GlobalEventConfigurationSection="globalEventConfig" 
+    PluginManagementConfigurationSection="pluginManagementConfig" 
+    LogFilesLocation="${log.files.location}" 
+    DataSessionBuilderConfigurationSection="dataSessionBuilderConfig"
+    BusinessLogicBuilderConfigurationSection="businessLogicBuilderConfig">
 	</Freetime.Configuration>
 	<!--End of Freetime Main Configuration-->
 	<!--Global Event Handlers-->
@@ -61,6 +69,13 @@
 		</Attributes>
 	</dataSessionBuilderConfig>
 	<!-- End of DataSessionBuilder -->
+  <!--BusinessLogicBuilder-->
+  <businessLogicBuilderConfig CustomProvider="false" FactoryType="">
+    <Attributes>
+      <clearAttributes/>
+    </Attributes>
+  </businessLogicBuilderConfig>
+  <!-- End of BusinessLogicBuilder -->
 	<!--End of Freetime Config Sections-->
 	<appSettings>
 	</appSettings>

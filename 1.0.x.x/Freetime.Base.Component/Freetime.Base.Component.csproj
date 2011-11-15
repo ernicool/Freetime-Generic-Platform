@@ -40,6 +40,10 @@
   <ItemGroup>
     <Reference Include="Freetime.Base.Framework, Version=1.0.1.1, Culture=neutral, PublicKeyToken=b86d1ba90a0e7353, processorArchitecture=MSIL" />
     <Reference Include="Freetime.Configuration, Version=1.0.1.1, Culture=neutral, PublicKeyToken=b86d1ba90a0e7353, processorArchitecture=MSIL" />
+    <Reference Include="Freetime.PluginManagement, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b86d1ba90a0e7353, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Freetime.PluginManagement.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -51,6 +55,9 @@
   <ItemGroup>
     <Compile Include="BusinessLogicBuilder.cs" />
     <Compile Include="BusinessLogicFactory.cs" />
+    <Compile Include="Configuration\BusinessLogicBuilderConfiguration.cs" />
+    <Compile Include="Configuration\BusinessLogicBuilderConfigurationAttribute.cs" />
+    <Compile Include="Configuration\BusinessLogicBuilderConfigurationAttributeCollection.cs" />
     <Compile Include="Diagnostics\LogWriterTraceListener.cs" />
     <Compile Include="IBusinessLogicBuilder.cs" />
     <Compile Include="IBusinessLogicFactory.cs" />

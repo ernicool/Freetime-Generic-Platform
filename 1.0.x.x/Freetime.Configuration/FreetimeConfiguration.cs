@@ -72,6 +72,19 @@ namespace Freetime.Configuration
             }
         }
 
+        [ConfigurationProperty("BusinessLogicBuilderConfigurationSection", IsRequired = false)]
+        public string BusinessLogicBuilderConfigurationSection
+        {
+            get
+            {
+                return (string)this["BusinessLogicBuilderConfigurationSection"];
+            }
+            set
+            {
+                this["BusinessLogicBuilderConfigurationSection"] = value;
+            }
+        }
+
         [ConfigurationProperty("LogFilesLocation", IsRequired = true)]
         public string LogFilesLocation
         {
