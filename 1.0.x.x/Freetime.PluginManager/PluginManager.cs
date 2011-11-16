@@ -40,10 +40,9 @@ namespace Freetime.PluginManagement
             if (!string.IsNullOrEmpty(configSection))
             {
                 var config = System.Configuration.ConfigurationManager.GetSection(configSection);
-                if (config == null)
-                {                    
+                if (Equals(config, null))                    
                     throw new Exception("PluginManagementConfiguration Not Implemented");
-                }
+                
                 Configuration = config as PluginManagerConfiguration;
             }
             else 
@@ -92,6 +91,9 @@ namespace Freetime.PluginManagement
 
         Type IPluginManager.GetControllerType(string controllerName)
         {
+            if(string.IsNullOrEmpty(controllerName))
+                throw new ArgumentNullException("controllerName");
+
             if (!Controllers.ContainsKey(controllerName))
             {
                 var webController = m_controllerList.FirstOrDefault(x => x.Name == controllerName);
@@ -108,15 +110,24 @@ namespace Freetime.PluginManagement
             return Controllers[controllerName];
         }
 
+        WebController IPluginManager.GetWebControllerByType(string controllerType)
+        {
+            if(string.IsNullOrEmpty(controllerType))
+                throw new ArgumentNullException("controllerType");
+
+            return m_controllerList.FirstOrDefault(x => x.ControllerType == controllerType);
+        }
+
         public void LoadWebControllers(string xmlsource)
         {
-            if (!File.Exists(xmlsource))
-                throw new FileNotFoundException(xmlsource);
             m_controllerList = GetWebControllers(xmlsource);
         }
 
         private static WebControllerList GetWebControllers(string xmlsource)
         {
+            if (!File.Exists(xmlsource))
+                throw new FileNotFoundException(xmlsource);
+
             Stream stream = null;
             try
             {
@@ -143,13 +154,14 @@ namespace Freetime.PluginManagement
 
         private void LoadWebViews(string sourceXml)
         {
-            if (!File.Exists(sourceXml))
-                throw new FileNotFoundException(sourceXml);
             m_viewList = GetWebViewList(sourceXml);
         }
 
-        private WebViewList GetWebViewList(string xmlsource)
+        private static WebViewList GetWebViewList(string xmlsource)
         {
+            if (!File.Exists(xmlsource))
+                throw new FileNotFoundException(xmlsource);
+
             Stream stream = null;
             try
             {
@@ -176,13 +188,15 @@ namespace Freetime.PluginManagement
 
         private void LoadWebPartialViews(string sourceXml)
         {
-            if (!File.Exists(sourceXml))
-                throw new FileNotFoundException(sourceXml);
             m_partialViewList = GetWebPartialViewList(sourceXml);
         }
 
-        private WebPartialViewList GetWebPartialViewList(string xmlsource)
+        private static WebPartialViewList GetWebPartialViewList(string xmlsource)
         {
+
+            if (!File.Exists(xmlsource))
+                throw new FileNotFoundException(xmlsource);
+
             Stream stream = null;
             try
             {
@@ -209,13 +223,15 @@ namespace Freetime.PluginManagement
 
         private void LoadWebMasterPages(string sourceXml)
         {
-            if (!File.Exists(sourceXml))
-                throw new FileNotFoundException(sourceXml);
             m_masterPageList = GetMasterPageList(sourceXml);
         }
 
-        private WebMasterPageList GetMasterPageList(string xmlsource)
+        private static WebMasterPageList GetMasterPageList(string xmlsource)
         {
+
+            if (!File.Exists(xmlsource))
+                throw new FileNotFoundException(xmlsource);
+
             Stream stream = null;
             try
             {
@@ -250,13 +266,15 @@ namespace Freetime.PluginManagement
 
         private void LoadBusinessLogics(string sourceXml)
         {
-            if (!File.Exists(sourceXml))
-                throw new FileNotFoundException(sourceXml);
             m_businessLogicList = GetBusinessLogicList(sourceXml);
         }
 
-        private BusinessLogicList GetBusinessLogicList(string xmlsource)
+        private static BusinessLogicList GetBusinessLogicList(string xmlsource)
         {
+
+            if (!File.Exists(xmlsource))
+                throw new FileNotFoundException(xmlsource);
+
             Stream stream = null;
             try
             {
@@ -278,13 +296,15 @@ namespace Freetime.PluginManagement
 
         private void LoadDataSessionServices(string sourceXml)
         {
-            if (!File.Exists(sourceXml))
-                throw new FileNotFoundException(sourceXml);
             m_dataServiceList = GetDataSessionServiceList(sourceXml);
         }
 
-        private DataSessionServiceList GetDataSessionServiceList(string xmlsource)
+        private static DataSessionServiceList GetDataSessionServiceList(string xmlsource)
         {
+
+            if (!File.Exists(xmlsource))
+                throw new FileNotFoundException(xmlsource);
+
             Stream stream = null;
             try
             {

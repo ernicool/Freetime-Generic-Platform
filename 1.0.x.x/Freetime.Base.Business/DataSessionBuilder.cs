@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using Freetime.Base.Framework;
 using Freetime.Base.Framework.Diagnostics;
 using Freetime.Base.Data.Contracts;
 using Freetime.Base.Business.Implementable;
@@ -43,7 +42,7 @@ namespace Freetime.Base.Business
 
         static DataSessionBuilder()
         { 
-            string configSection = Freetime.Configuration.ConfigurationManager.FreetimeConfiguration.DataSessionBuilderConfigurationSection;
+            var configSection = Freetime.Configuration.ConfigurationManager.FreetimeConfiguration.DataSessionBuilderConfigurationSection;
 
             if (string.IsNullOrEmpty(configSection))
                 return;
@@ -52,20 +51,20 @@ namespace Freetime.Base.Business
             {
                 var section = ConfigurationManager.GetSection(configSection);
                 if (!typeof(DataSessionBuilderConfiguration).IsAssignableFrom(section.GetType()))
-                {
-                    TraceUtil.WriteLine(string.Format("ConfigurationSection {0} is not of Type Freetime.Base.Business.Configuration.DataSessionBuilderConfiguration", configSection)
-                        , TraceUtil.Category.Critical);
                     throw new Exception(string.Format("ConfigurationSection {0} is not of Type Freetime.Base.Business.Configuration.DataSessionBuilderConfiguration", configSection));
-                }
 
                 var sessionBuilderConfig = section as DataSessionBuilderConfiguration;
+
+                if (Equals(sessionBuilderConfig, null))
+                    throw new Exception(string.Format("ConfigurationSection {0} is not of Type Freetime.Base.Business.Configuration.DataSessionBuilderConfiguration", configSection));
+
                 if (sessionBuilderConfig.CustomProvider)
                 {
                     var sessionFactoryType = Type.GetType(sessionBuilderConfig.FactoryType);
 
                     if (Equals(sessionFactoryType, null))
                     {
-                        TraceUtil.WriteLine(string.Format("Unknown DataSessionFactory Type: {0}", sessionBuilderConfig.FactoryType), TraceUtil.Category.Critical);
+                        TraceUtil.WriteLine(string.Format("Unknown IDataSessionFactory Type: {0}", sessionBuilderConfig.FactoryType), TraceUtil.Category.Critical);
                         throw new Exception(string.Format("Unknow Type {0}", sessionBuilderConfig.FactoryType));
                     }
 
@@ -73,17 +72,19 @@ namespace Freetime.Base.Business
                     
                     if(Equals(sessionFactory, null))
                     {
-                        TraceUtil.WriteLine(string.Format("Unable to create DataSessionFactory instance of type {0}", sessionBuilderConfig.FactoryType), TraceUtil.Category.Critical);
-                        throw new Exception(string.Format("Unable to create DataSessionFactory instance of type {0}", sessionBuilderConfig.FactoryType));
+                        TraceUtil.WriteLine(string.Format("Unable to create IDataSessionFactory instance of type {0}", sessionBuilderConfig.FactoryType), TraceUtil.Category.Critical);
+                        throw new Exception(string.Format("Unable to create IDataSessionFactory instance of type {0}", sessionBuilderConfig.FactoryType));
                     }
 
                     if (!typeof(IDataSessionFactory).IsAssignableFrom(sessionFactory.GetType()))
                     {
-                        TraceUtil.WriteLine(string.Format("{0} is not of type DataSessionFactory", sessionBuilderConfig.FactoryType), TraceUtil.Category.Critical);
-                        throw new Exception(string.Format("{0} is not of type DataSessionFactory", sessionBuilderConfig.FactoryType));
+                        TraceUtil.WriteLine(string.Format("{0} is not of type IDataSessionFactory", sessionBuilderConfig.FactoryType), TraceUtil.Category.Critical);
+                        throw new Exception(string.Format("{0} is not of type IDataSessionFactory", sessionBuilderConfig.FactoryType));
                     }
 
                     DataSessionFactory = sessionFactory as IDataSessionFactory;
+                    if(Equals(DataSessionFactory, null))
+                        throw new Exception(string.Format("{0} is not of type IDataSessionFactory", sessionBuilderConfig.FactoryType));
 
                     foreach (DataSessionBuilderConfigurationAttribute attribute in sessionBuilderConfig.Attributes)
                     {
@@ -94,7 +95,7 @@ namespace Freetime.Base.Business
             catch (Exception ex)
             {
                 TraceUtil.WriteLine(ex.Message);
-                throw ex;
+                throw;
             }
         
         }
